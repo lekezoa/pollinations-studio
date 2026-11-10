@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pollinations Studio – All Free Image Models</title>
+<style>
+:root{--bg:#f6f5f2;--card:#fff;--tx:#1c1b1a;--mut:#6b6a66;--bd:#e2e0da;--ac:#d4680f;--ac2:#fff}
+@media (prefers-color-scheme:dark){:root{--bg:#161514;--card:#201f1d;--tx:#f1efe9;--mut:#9b9992;--bd:#34322e;--ac:#f08a2c;--ac2:#161514}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.45 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;padding:14px;max-width:1100px;margin-inline:auto}
+h1{font-size:20px;margin:4px 0 12px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:12px;margin-bottom:12px}
+textarea,input,select{width:100%;background:var(--bg);color:var(--tx);border:1px solid var(--bd);border-radius:8px;padding:9px;font:inherit}
+textarea{min-height:84px;resize:vertical}
+label{font-size:12px;color:var(--mut);display:block;margin-bottom:3px}
+.row{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-top:10px}
+button{background:var(--ac);color:var(--ac2);border:0;border-radius:8px;padding:10px 14px;font:inherit;font-weight:600;cursor:pointer}
+button.sec{background:transparent;color:var(--tx);border:1px solid var(--bd);font-weight:500;padding:6px 10px;font-size:13px}
+button:disabled{opacity:.5}
+.models{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.chip{display:flex;align-items:center;gap:6px;border:1px solid var(--bd);border-radius:20px;padding:5px 10px;font-size:13px;cursor:pointer;user-select:none}
+.chip input{width:auto;margin:0}
+.chip.paid{opacity:.55}
+.chk{display:flex;align-items:center;gap:6px;font-size:13px;margin-top:10px}
+.chk input{width:auto}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}
+.gh{font-size:13px;color:var(--mut);margin:6px 2px;word-break:break-word}
+.res{background:var(--card);border:1px solid var(--bd);border-radius:12px;overflow:hidden}
+.res .h{padding:8px 10px;font-weight:600;font-size:13px;display:flex;justify-content:space-between;gap:6px}
+.res .box{white-space:pre-wrap;word-break:break-word;aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;background:var(--bg);color:var(--mut);font-size:13px;text-align:center;padding:8px}
+.res img{width:100%;height:100%;object-fit:contain;display:block}
+.res .f{padding:8px;display:flex;gap:6px}
+.res .f a{flex:1;text-align:center;text-decoration:none;border:1px solid var(--bd);border-radius:8px;padding:6px;color:var(--tx);font-size:13px}
+.note{font-size:12px;color:var(--mut);margin-top:8px}
+details summary{cursor:pointer;font-size:13px;color:var(--mut)}
+.spin{width:22px;height:22px;border:3px solid var(--bd);border-top-color:var(--ac);border-radius:50%;animation:s 1s linear infinite}
+@keyframes s{to{transform:rotate(360deg)}}
+
+.tabs{display:flex;gap:6px;margin-bottom:12px}
+.tabs button{flex:1;background:transparent;color:var(--tx);border:1px solid var(--bd);font-weight:500}
+.tabs button.on{background:var(--ac);color:var(--ac2);border-color:var(--ac)}
+#msgs{display:flex;flex-direction:column;gap:8px;max-height:55vh;overflow-y:auto;padding:4px 0}
+.b{max-width:88%;padding:9px 12px;border-radius:14px;white-space:pre-wrap;word-break:break-word;font-size:14.5px}
+.b.u{align-self:flex-end;background:var(--ac);color:var(--ac2)}
+.b.a{align-self:flex-start;background:var(--bg);border:1px solid var(--bd)}
+.b.e{align-self:flex-start;background:transparent;border:1px dashed var(--ac);color:var(--mut)}
+.cin{display:flex;gap:6px;margin-top:10px;align-items:flex-end}
+.cin textarea{min-height:44px;max-height:140px}
+</style>
+<script defer src="https://cdn.jsdelivr.net/npm/@pollinations/ui@0.1.0-alpha.20/dist/connect.js" onerror="document.getElementById('authstatus').textContent='Login load nahi hua. Internet check karke reload karo.'"></script>
+</head>
+<body>
+<h1>🌸 Pollinations Studio</h1>
+<div class="card">
+  <strong>Pollinations Login</strong>
+  <p class="note">Apne Pollinations account se connect karo. Image aur chat tumhare approved Pollen budget se chalenge.</p>
+  <polli-connect app-key="pk_AL3o4VXygbKErXz0" models="image,text" budget="5" expiry="7"></polli-connect>
+  <div id="authstatus" class="note" role="status" aria-live="polite">Login ke liye Connect button dabao.</div>
+  <details class="note"><summary>Login setup</summary>
+    <p>Is page ko HTTPS par host karo. Pollinations Apps mein apni App Key ke Redirect URIs mein neeche ka exact page URL add karo:</p>
+    <input id="callbackurl" readonly aria-label="Redirect URI">
+    <a href="https://enter.pollinations.ai" target="_blank" rel="noopener">Pollinations Apps kholo</a>
+  </details>
+</div>
+<div class="tabs"><button id="tabi" class="on">🖼️ Images</button><button id="tabc">💬 Chat</button></div>
+<div id="imgtab">
+
+<div class="card">
+  <label for="prompt">Prompt (Batch mode ON ho to har line = ek alag prompt, max 10)</label>
+  <textarea id="prompt" placeholder="Jo bhi image chahiye uska description likho..."></textarea>
+  <div class="row">
+    <div><label>Size</label>
+      <select id="size">
+        <option value="1024x1024">1024×1024 (Square)</option>
+        <option value="768x1344">768×1344 (Portrait)</option>
+        <option value="1344x768">1344×768 (Landscape)</option>
+        <option value="512x512">512×512 (Fast)</option>
+      </select></div>
+    <div><label>Seed (khali = random)</label><input id="seed" type="number" placeholder="random"></div>
+    <div><label>Negative prompt</label><input id="neg" placeholder="optional"></div>
+  </div>
+  <div class="chk"><input type="checkbox" id="batch"><label for="batch" style="margin:0;font-size:13px;color:var(--tx)">Batch mode (10 prompts tak, har line ek prompt)</label></div>
+  <div class="chk"><label style="margin:0">Ek saath kitni image chalani hain:</label><select id="conc" style="width:auto"><option>2</option><option selected>4</option><option>6</option><option>10</option></select></div>
+  <div class="chk"><input type="checkbox" id="enhance"><label for="enhance" style="margin:0;font-size:13px;color:var(--tx)">Prompt enhance (AI se prompt behtar)</label></div>
+  <div class="chk"><input type="checkbox" id="nologo" checked><label for="nologo" style="margin:0;font-size:13px;color:var(--tx)">Logo/watermark hatao (agar allowed ho)</label></div>
+</div>
+
+<div class="card">
+  <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
+    <strong>Models <span id="count" style="color:var(--mut);font-weight:400"></span></strong>
+    <span>
+      <button class="sec" id="all">Select all</button>
+      <button class="sec" id="none">Clear</button>
+      
+    </span>
+  </div>
+  <div class="models" id="models"><span class="note">Models load ho rahe hain...</span></div>
+  <div style="display:flex;gap:6px;margin-top:10px">
+    <input id="cm" placeholder="Custom model ID (e.g. openai/gpt-image-2)" style="flex:1">
+    <button class="sec" id="cmadd">+ Add</button>
+  </div>
+  <details style="margin-top:10px"><summary>API key &amp; endpoint</summary>
+    <label style="margin-top:6px">Endpoint</label>
+    <select id="ep">
+      <option value="gen">gen.pollinations.ai/image (naya)</option>
+      <option value="old">image.pollinations.ai/prompt (purana)</option>
+    </select>
+    <input id="key" type="password" placeholder="Pollinations key (enter.pollinations.ai) – paid models ke liye" style="margin-top:6px">
+    <div class="note">Login se user key automatically aati hai. Manual key sirf is tab ke session mein save hoti hai.</div>
+  </details>
+  <button id="go" style="width:100%;margin-top:12px">Generate (selected models)</button>
+</div>
+
+<div id="out"></div>
+
+</div>
+
+<div id="chattab" hidden>
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
+      <strong>Chat model</strong>
+      <button class="sec" id="cclear">Chat clear</button>
+    </div>
+    <select id="cmodel" style="margin-top:8px"></select>
+    <div style="display:flex;gap:6px;margin-top:8px">
+      <input id="ctm" placeholder="Custom text model ID" style="flex:1">
+      <button class="sec" id="ctmadd">+ Add</button>
+    </div>
+    <details style="margin-top:8px"><summary>System prompt (optional)</summary>
+      <textarea id="sys" placeholder="Jaise: Tum ek helpful assistant ho jo Hinglish me jawab deta hai." style="margin-top:6px"></textarea>
+    </details>
+    <div class="note">API key aur endpoint "Images" tab ke "API key &amp; endpoint" wale section se lagte hain.</div>
+  </div>
+  <div class="card">
+    <div id="msgs"><div class="note">Kuch bhi poochho...</div></div>
+    <div class="cin">
+      <textarea id="cin" placeholder="Message likho..." rows="1"></textarea>
+      <button id="csend">Send</button>
+    </div>
+  </div>
+</div>
+<script>
+const BASE='https://gen.pollinations.ai';
+// Fallback list agar API se models na aayein
+const FREE10=['openai/gpt-image-2','black-forest-labs/flux.1-schnell','tongyi-mai/z-image-turbo','black-forest-labs/flux.2-klein-4b','black-forest-labs/flux.1-kontext-pro','openai/gpt-image-1-mini','black-forest-labs/flux.1.1-pro','openai/gpt-image-1.5','microsoft/mai-image-2.6-flash','microsoft/mai-image-2.6'];
+const FALLBACK=FREE10.map(id=>({id,paid:false}));
+const $=id=>document.getElementById(id);
+let MODELS=[];
+let CUSTOM=[];
+try{CUSTOM=JSON.parse(ls0('cm')||'[]')}catch(e){CUSTOM=[]}
+function ls0(k){try{return localStorage.getItem(k)}catch(e){return null}}
+function saveCustom(){try{localStorage.setItem('cm',JSON.stringify(CUSTOM))}catch(e){}}
+
+function ls(k,v){try{if(v===undefined)return localStorage.getItem(k);localStorage.setItem(k,v)}catch(e){return null}}
+// App key identifies the application; only user-authorized keys authenticate generation.
+try{localStorage.removeItem('pk')}catch(e){}
+function sessionKey(value){try{if(value===undefined)return sessionStorage.getItem('studio-user-key')||'';if(value)sessionStorage.setItem('studio-user-key',value);else sessionStorage.removeItem('studio-user-key')}catch(e){return ''}}
+$('key').value=sessionKey();
+$('key').addEventListener('change',()=>{sessionKey($('key').value.trim());render()});
+const connect=document.querySelector('polli-connect');
+$('callbackurl').value=location.origin+location.pathname;
+if(location.protocol!=='https:'&&location.hostname!=='localhost'&&location.hostname!=='127.0.0.1'){
+  connect.hidden=true;
+  $('authstatus').textContent='Login ke liye is HTML ko HTTPS website par host karo; downloaded file se redirect login nahi chalega.';
+}
+connect.addEventListener('change',()=>{
+  const key=connect.apiKey||'';
+  $('key').value=key;
+  sessionKey(key);
+  $('authstatus').textContent=key?'Connected — image aur chat ke liye ready.':'Disconnected — dobara Connect karo.';
+  render();
+});
+customElements.whenDefined('polli-connect').then(()=>{
+  if(connect.apiKey){$('key').value=connect.apiKey;sessionKey(connect.apiKey);$('authstatus').textContent='Connected — image aur chat ke liye ready.';render()}
+});
+
+function parse(data){
+  const arr=Array.isArray(data)?data:(data.models||Object.values(data));
+  const out=[];
+  for(const m of arr){
+    if(typeof m==='string'){out.push({id:m,paid:false});continue}
+    const id=m.name||m.id||m.model; if(!id)continue;
+    const mods=m.output_modalities||m.outputs;
+    if(Array.isArray(mods)&&!mods.includes('image'))continue; // skip video/audio-only
+    if(Array.isArray(mods)&&mods.includes('video')&&!mods.includes('image'))continue;
+    out.push({id,paid:!!(m.paid_only||m.paidOnly)});
+  }
+  return out.length?out:FALLBACK;
+}
+
+async function loadModels(){
+  MODELS=[...FALLBACK];
+  render();
+}
+
+function render(){
+  MODELS=[...FALLBACK,...CUSTOM.filter(c=>!FALLBACK.some(f=>f.id===c)).map(id=>({id,paid:false}))];
+  const hasKey=!!$('key').value.trim();
+  const prev=new Set([...document.querySelectorAll('.chip input:checked')].map(i=>i.value));
+  const first=!document.querySelector('.chip');
+  $('models').innerHTML='';
+  MODELS.forEach(m=>{
+    const locked=m.paid&&!hasKey;
+    const l=document.createElement('label');
+    l.className='chip'+(locked?' paid':'');
+    const checked=locked?false:(first?!m.paid:prev.has(m.id));
+    const isC=CUSTOM.includes(m.id);
+    l.innerHTML=`<input type="checkbox" value="${m.id}" ${checked?'checked':''} ${locked?'disabled':''}> ${m.id}${m.paid?' 🔑':''}${isC?' <span class="x" data-id="'+m.id+'" style="cursor:pointer;color:var(--mut);padding-left:2px">✕</span>':''}`;
+    $('models').appendChild(l);
+  });
+  const free=MODELS.filter(m=>!m.paid).length;
+  $('count').textContent=`(${free} free, ${MODELS.length-free} paid)`;
+}
+
+$('cmadd').onclick=()=>{
+  const v=$('cm').value.trim();
+  if(!v)return;
+  if(!MODELS.some(m=>m.id===v)){CUSTOM.push(v);saveCustom()}
+  $('cm').value='';
+  render();
+  document.querySelectorAll('.chip input').forEach(i=>{if(i.value===v)i.checked=true});
+};
+$('cm').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();$('cmadd').click()}});
+$('models').addEventListener('click',e=>{
+  const x=e.target.closest('.x');
+  if(!x)return;
+  e.preventDefault();
+  CUSTOM=CUSTOM.filter(c=>c!==x.dataset.id);saveCustom();render();
+});
+$('all').onclick=()=>document.querySelectorAll('.chip input:not(:disabled)').forEach(i=>i.checked=true);
+$('none').onclick=()=>document.querySelectorAll('.chip input').forEach(i=>i.checked=false);
+
+function url(model,p,seed){
+  const [w,h]=$('size').value.split('x');
+  const q=new URLSearchParams({model,width:w,height:h,seed});
+  if($('nologo').checked)q.set('nologo','true');
+  if($('enhance').checked)q.set('enhance','true');
+  if($('neg').value.trim())q.set('negative_prompt',$('neg').value.trim());
+  const base=$('ep').value==='old'?'https://image.pollinations.ai/prompt/':BASE+'/image/';
+  return `${base}${encodeURIComponent(p)}?${q}`;
+}
+
+function card(model,p,wrap){
+  const d=document.createElement('div');d.className='res';
+  d.innerHTML=`<div class="h"><span>${model}</span><span class="t" style="color:var(--mut);font-weight:400"></span></div><div class="box"><div class="spin"></div></div><div class="f"></div>`;
+  if(p){const c=document.createElement('div');c.className='note';c.style.padding='0 10px';c.textContent=p.length>70?p.slice(0,70)+'…':p;d.insertBefore(c,d.querySelector('.box'))}
+  wrap.appendChild(d);return d;
+}
+
+function run(model,p,seed,wrap,done){
+  const d=card(model,p,wrap),box=d.querySelector('.box'),t=d.querySelector('.t'),f=d.querySelector('.f');
+  const u=url(model,p,seed),t0=performance.now();
+  const retry=()=>{
+    f.innerHTML=`<a href="#">Retry</a>`;
+    f.firstChild.onclick=e=>{e.preventDefault();const n=document.createElement('div');n.style.display='contents';d.replaceWith(n);run(model,p,seed,n)};
+  };
+  const fail=msg=>{box.textContent=msg;retry();done&&done()};
+  const ok=src=>{
+    const img=new Image();
+    img.onload=()=>{
+      box.innerHTML='';box.appendChild(img);
+      t.textContent=((performance.now()-t0)/1000).toFixed(1)+'s';
+      f.innerHTML=`<a href="${src}" target="_blank" rel="noopener">Open</a><a href="${src}" download="${model.replace(/[^a-z0-9.-]/gi,'_')}-${seed}.jpg">Save</a>`;
+      done&&done();
+    };
+    img.onerror=()=>fail('Image data corrupt aaya ya model ne image nahi di.');
+    img.src=src;
+  };
+  // fetch se asli error (status + message) dikhta hai
+  const userKey=$('key').value.trim();
+  fetch(u,{headers:userKey?{Authorization:'Bearer '+userKey}:{}}).then(async r=>{
+    if(!r.ok){
+      let body='';try{body=(await r.text()).slice(0,300)}catch(e){}
+      let msg=body;
+      try{const j=JSON.parse(body);msg=(j.error&&(j.error.message||j.error))||j.message||body}catch(e){}
+      const hint=r.status===401||r.status===403?' → API key chahiye ya model allowed nahi.':r.status===402?' → Pollen/credit chahiye (paid model).':r.status===404?' → Model ID galat hai.':r.status===429?' → Rate limit, concurrency kam karo.':'';
+      return fail(`Error ${r.status}${hint}\n${typeof msg==='string'?msg:JSON.stringify(msg)}`);
+    }
+    const ct=r.headers.get('content-type')||'';
+    if(!ct.startsWith('image/')){return fail('Image ki jagah ye mila: '+(await r.text()).slice(0,200))}
+    ok(URL.createObjectURL(await r.blob()));
+  }).catch(()=>{
+    if(userKey)fail('Network/CORS error. Connection check karo aur retry karo.');
+    else ok(u);
+  });
+}
+
+$('go').onclick=()=>{
+  const raw=$('prompt').value.trim();
+  if(!raw){$('prompt').focus();return}
+  let prompts=$('batch').checked?raw.split('\n').map(x=>x.trim()).filter(Boolean):[raw];
+  if(prompts.length>10){alert('Max 10 prompts allowed. Pehle 10 use ho rahe hain.');prompts=prompts.slice(0,10)}
+  const sel=[...document.querySelectorAll('.chip input:checked')].map(i=>i.value);
+  if(!sel.length){alert('Kam se kam ek model select karo');return}
+  const baseSeed=$('seed').value?+$('seed').value:Math.floor(Math.random()*1e6);
+  const jobs=[];
+  const group=document.createElement('div');
+  $('out').prepend(group);
+  prompts.forEach((p,i)=>{
+    const h=document.createElement('div');h.className='gh';h.textContent=(prompts.length>1?`#${i+1}  `:'')+p;
+    const wrap=document.createElement('div');wrap.className='grid';
+    group.append(h,wrap);
+    sel.forEach(m=>jobs.push({m,p,wrap,seed:prompts.length>1&&!$('seed').value?baseSeed+i:baseSeed}));
+  });
+  // queue with limited concurrency taaki rate limit na lage
+  let idx=0,active=0;const max=+$('conc').value;
+  const next=()=>{
+    while(active<max&&idx<jobs.length){
+      const j=jobs[idx++];active++;
+      run(j.m,j.p,j.seed,j.wrap,()=>{active--;next()});
+    }
+  };
+  next();
+};
+
+// ===== Tabs =====
+function showTab(c){
+  $('imgtab').hidden=c;$('chattab').hidden=!c;
+  $('tabi').classList.toggle('on',!c);$('tabc').classList.toggle('on',c);
+}
+$('tabi').onclick=()=>showTab(false);
+$('tabc').onclick=()=>showTab(true);
+
+// ===== Chat =====
+const TEXT_DEFAULT=['openai','openai-fast','mistral','gemini-fast','deepseek'];
+let CTM=[];try{CTM=JSON.parse(ls0('ctm')||'[]')}catch(e){CTM=[]}
+let HIST=[],busy=false;
+
+function fillTextModels(extra){
+  const sel=$('cmodel'),cur=sel.value;
+  const all=[...new Set([...TEXT_DEFAULT,...(extra||[]),...CTM])];
+  sel.innerHTML=all.map(m=>`<option value="${m}">${m}${CTM.includes(m)?' (custom)':''}</option>`).join('');
+  if(cur&&all.includes(cur))sel.value=cur;
+}
+fillTextModels();
+// live text model list (agar mil jaye)
+fetch(BASE+'/v1/models').then(r=>r.json()).then(j=>{
+  const ids=(j.data||[]).map(m=>m.id).filter(Boolean);
+  if(ids.length)fillTextModels(ids);
+}).catch(()=>{});
+
+$('ctmadd').onclick=()=>{
+  const v=$('ctm').value.trim();if(!v)return;
+  if(!CTM.includes(v)&&!TEXT_DEFAULT.includes(v)){CTM.push(v);try{localStorage.setItem('ctm',JSON.stringify(CTM))}catch(e){}}
+  $('ctm').value='';fillTextModels();$('cmodel').value=v;
+};
+$('ctm').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();$('ctmadd').click()}});
+
+function bubble(cls,text){
+  if($('msgs').querySelector('.note'))$('msgs').innerHTML='';
+  const b=document.createElement('div');b.className='b '+cls;b.textContent=text;
+  $('msgs').appendChild(b);$('msgs').scrollTop=$('msgs').scrollHeight;return b;
+}
+$('cclear').onclick=()=>{HIST=[];$('msgs').innerHTML='<div class="note">Kuch bhi poochho...</div>'};
+
+async function sendChat(){
+  if(busy)return;
+  const txt=$('cin').value.trim();if(!txt)return;
+  $('cin').value='';
+  HIST.push({role:'user',content:txt});bubble('u',txt);
+  const out=bubble('a','…');
+  busy=true;$('csend').disabled=true;
+  const msgs=[];
+  if($('sys').value.trim())msgs.push({role:'system',content:$('sys').value.trim()});
+  msgs.push(...HIST);
+  const ep=$('ep').value==='old'?'https://text.pollinations.ai/openai':BASE+'/v1/chat/completions';
+  const headers={'Content-Type':'application/json'};
+  const k=$('key').value.trim();if(k)headers.Authorization='Bearer '+k;
+  try{
+    const r=await fetch(ep,{method:'POST',headers,body:JSON.stringify({model:$('cmodel').value,messages:msgs,stream:true})});
+    if(!r.ok){
+      let body='';try{body=(await r.text()).slice(0,300)}catch(e){}
+      let msg=body;try{const j=JSON.parse(body);msg=(j.error&&(j.error.message||j.error))||j.message||body}catch(e){}
+      const hint=r.status===401||r.status===403?' → API key chahiye ya model allowed nahi.':r.status===402?' → Pollen/credit chahiye.':r.status===404?' → Model ID galat hai.':r.status===429?' → Rate limit, thoda ruko.':'';
+      out.className='b e';out.textContent=`Error ${r.status}${hint}\n`+(typeof msg==='string'?msg:JSON.stringify(msg));
+      HIST.pop();return;
+    }
+    const ct=r.headers.get('content-type')||'';
+    let full='';
+    if(ct.includes('text/event-stream')&&r.body){
+      const rd=r.body.getReader(),dec=new TextDecoder();let buf='';
+      while(true){
+        const {done,value}=await rd.read();if(done)break;
+        buf+=dec.decode(value,{stream:true});
+        const lines=buf.split('\n');buf=lines.pop();
+        for(const ln of lines){
+          const l=ln.trim();if(!l.startsWith('data:'))continue;
+          const d=l.slice(5).trim();if(d==='[DONE]')continue;
+          try{const j=JSON.parse(d);const c=j.choices&&j.choices[0]&&((j.choices[0].delta&&j.choices[0].delta.content)||(j.choices[0].message&&j.choices[0].message.content));if(c){full+=c;out.textContent=full;$('msgs').scrollTop=$('msgs').scrollHeight}}catch(e){}
+        }
+      }
+    }else{
+      const j=await r.json();full=(j.choices&&j.choices[0]&&j.choices[0].message&&j.choices[0].message.content)||JSON.stringify(j);
+      out.textContent=full;
+    }
+    if(!full){out.className='b e';out.textContent='Khali jawab aaya. Dobara try karo ya model badlo.';HIST.pop();return}
+    HIST.push({role:'assistant',content:full});
+  }catch(e){
+    out.className='b e';out.textContent='Network/CORS error: '+e.message;HIST.pop();
+  }finally{busy=false;$('csend').disabled=false}
+}
+$('csend').onclick=sendChat;
+$('cin').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey&&!e.isComposing&&window.innerWidth>700){e.preventDefault();sendChat()}});
+
+loadModels();
+</script>
+</body>
+</html>
